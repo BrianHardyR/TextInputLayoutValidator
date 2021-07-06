@@ -6,7 +6,7 @@ package com.validator.textinputvalidator
  * @param validators collection of validators
  *          @example listOf( { text ->  text.isNullOrEmpty() } ... )
  */
-sealed class TextInputValidationObj(
+class TextInputValidationObj(
     val default: String = "",
     val validators: Collection<(String) -> Boolean> = emptyList(),
     val error: String = "",
