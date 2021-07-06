@@ -1,6 +1,23 @@
 # TextInputLayoutValidator
 This project provides a simple and streamlined way to validate TextInputLayoutEditText
 
+## Installation
+1. Add the JitPack repository to your build file
+```
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+2. Add the dependency
+```
+    dependencies {
+	        implementation 'com.github.BrianHardyR:TextInputLayoutValidator:1.0.0'
+	}
+```
+
 ## How to
 <b>Simple Validation</b>
 ```kotlin
