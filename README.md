@@ -31,7 +31,9 @@ val phoneNumberValidator = TextInputValidationObj(
     )
 )
 
-myinput.validate(phoneNumberValidator)
+myinput.validate(phoneNumberValidator){ validText ->
+    // do something with the valid text
+}
 ```
 
 
