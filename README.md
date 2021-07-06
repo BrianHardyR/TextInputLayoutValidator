@@ -34,5 +34,10 @@ val phoneNumberValidator = TextInputValidationObj(
 myinput.validate(phoneNumberValidator)
 ```
 
+<b>Validate input</b>
+After setting the validation object on the TextInputLayout you can validate it anywhere on your code
+```kotlin
+myinput.valid() // Return a Boolean.
+```
 
 
