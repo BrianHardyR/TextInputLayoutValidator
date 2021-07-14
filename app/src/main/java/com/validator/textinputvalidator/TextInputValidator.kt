@@ -33,7 +33,7 @@ fun TextInputLayout.validate(
     onValid: (String) -> Unit
 ) {
     if (editText == null) throw IllegalArgumentException("Validation requires at least one TextInputEditText as a child")
-    val validationObj = TextInputValidator(default, "", validators)
+    val validationObj = TextInputValidator(default, validators)
     setTag(R.id.validationTag, validationObj)
     editText?.setText(default)
     editText?.doOnTextChanged { text, _, _, _ ->
