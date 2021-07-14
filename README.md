@@ -37,7 +37,19 @@ myinput.validate(
 ```
 
 <b>Using the Validation Object</b>
+### Error message for each validation condition
+```kotlin
+val phoneNumberValidator = TextInputValidator(
+    defaultString = "My default text",
+    validators = listOf(
+        { text -> (text.length > 12) to "Length must be greater than 12"},
+        { text -> text.startsWith('+') to "Input must start with '+'"},
+        ...
+    )
+)
+```
 
+### Single error message
 ```kotlin
 val phoneNumberValidator = TextInputValidationObj(
     default = "My default text",

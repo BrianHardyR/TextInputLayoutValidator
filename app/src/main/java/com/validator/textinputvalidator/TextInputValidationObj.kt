@@ -14,6 +14,5 @@ class TextInputValidationObj(
 )
 class TextInputValidator(
     val defaultString : String = "",
-    val defaultError : String = "",
     val validators : Collection<(String) -> Pair<Boolean,String>> = emptyList()
 )
