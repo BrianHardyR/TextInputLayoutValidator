@@ -27,10 +27,38 @@ fun TextInputLayout.validate(
     }
 }
 
+fun TextInputLayout.validate(
+    default: String = "",
+    validators: Collection<(String) -> Pair<Boolean,String>> = emptyList(),
+    onValid: (String) -> Unit
+) {
+    if (editText == null) throw IllegalArgumentException("Validation requires at least one TextInputEditText as a child")
+    val validationObj = TextInputValidator(default, "", validators)
+    setTag(R.id.validationTag, validationObj)
+    editText?.setText(default)
+    editText?.doOnTextChanged { text, _, _, _ ->
+        for ( isValidAndError in validators ){
+            val validError = with(isValidAndError(text?.toString() ?: "")){
+                error = if (first) null else second
+                onValid( if (first) text?.toString() ?: "" else "" )
+                this
+            }
+            if (!validError.first) break
+        }
+    }
+}
+
 fun TextInputLayout.validate(validationObj: TextInputValidationObj, onValid: (String) -> Unit) {
     setTag(R.id.validationTag, validationObj)
     with(validationObj) {
         validate(default, validators, error, onValid)
+    }
+}
+
+fun TextInputLayout.validate(validationObj: TextInputValidator, onValid: (String) -> Unit) {
+    setTag(R.id.validationTag, validationObj)
+    with(validationObj) {
+        validate(defaultString,validators,onValid)
     }
 }
 
