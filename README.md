@@ -53,6 +53,7 @@ val phoneNumberValidator = TextInputValidator(
 ```kotlin
 val phoneNumberValidator = TextInputValidationObj(
     default = "My default text",
+    error = "Please enter a valid phone number",
     validators = listOf(
         { text -> text.length > 12},
         { text -> text.startsWith('+')},
