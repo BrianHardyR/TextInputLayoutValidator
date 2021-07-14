@@ -37,7 +37,7 @@ myinput.validate(
 ```
 
 <b>Using the Validation Object</b>
-### Error message for each validation condition
+##### Error message for each validation condition
 ```kotlin
 val phoneNumberValidator = TextInputValidator(
     defaultString = "My default text",
@@ -49,7 +49,7 @@ val phoneNumberValidator = TextInputValidator(
 )
 ```
 
-### Single error message
+##### Single error message
 ```kotlin
 val phoneNumberValidator = TextInputValidationObj(
     default = "My default text",
