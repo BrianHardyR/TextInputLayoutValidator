@@ -14,7 +14,7 @@ This project provides a simple and streamlined way to validate TextInputLayoutEd
 2. Add the dependency
 ```
     dependencies {
-	        implementation 'com.github.BrianHardyR:TextInputLayoutValidator:1.1.1'
+	        implementation 'com.github.BrianHardyR:TextInputLayoutValidator:1.1.2'
 	}
 ```
 
