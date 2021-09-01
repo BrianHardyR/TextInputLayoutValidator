@@ -29,7 +29,7 @@ fun TextInputLayout.validate(
 
 fun TextInputLayout.validate(
     default: String = "",
-    validators: Collection<(String) -> Pair<Boolean,String>> = emptyList(),
+    validators: Collection<(String) -> Pair<Boolean, String>> = emptyList(),
     onValid: (String) -> Unit
 ) {
     if (editText == null) throw IllegalArgumentException("Validation requires at least one TextInputEditText as a child")
@@ -37,10 +37,10 @@ fun TextInputLayout.validate(
     setTag(R.id.validationTag, validationObj)
     editText?.setText(default)
     editText?.doOnTextChanged { text, _, _, _ ->
-        for ( isValidAndError in validators ){
-            val validError = with(isValidAndError(text?.toString() ?: "")){
+        for (isValidAndError in validators) {
+            val validError = with(isValidAndError(text?.toString() ?: "")) {
                 error = if (first) null else second
-                onValid( if (first) text?.toString() ?: "" else "" )
+                onValid(if (first) text?.toString() ?: "" else "")
                 this
             }
             if (!validError.first) break
@@ -58,7 +58,7 @@ fun TextInputLayout.validate(validationObj: TextInputValidationObj, onValid: (St
 fun TextInputLayout.validate(validationObj: TextInputValidator, onValid: (String) -> Unit) {
     setTag(R.id.validationTag, validationObj)
     with(validationObj) {
-        validate(defaultString,validators,onValid)
+        validate(defaultString, validators, onValid)
     }
 }
 
@@ -66,7 +66,20 @@ fun TextInputLayout.validate(validationObj: TextInputValidator, onValid: (String
  * @return [TextInputValidationObj] else null
  */
 fun TextInputLayout.getValidator() =
-    getTag(R.id.validationTag)?.let { it as TextInputValidationObj } ?: null
+    getTag(R.id.validationTag)?.let {
+        if (it is TextInputValidationObj)
+            TextInputValidator(
+                defaultString = it.default,
+                validators = it.validators.map { validator ->
+                    { text ->
+                        validator.invoke(text) to it.default
+                    }
+                }
+            )
+        else it as TextInputValidator
+
+
+    } ?: null
 
 /**
  * @return [Boolean]
@@ -78,11 +91,11 @@ fun TextInputLayout.valid(): Boolean {
     val validationObj = getValidator()
     if (validationObj != null && editText != null) {
         return validationObj.validators.all { condition ->
-            condition(
+            val(passed, message) = condition(
                 editText?.text?.toString() ?: ""
             )
-        }.also { valid ->
-            error = if (valid) null else validationObj.error
+            error = if (passed) null else message
+            passed
         }
     } else {
         throw IllegalArgumentException("Call TextInputLayout#validate(args) first $id")
